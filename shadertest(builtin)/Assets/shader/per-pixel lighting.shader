@@ -8,14 +8,16 @@ Shader "Custom/per-pixel lighting"
     {
         _Color("Color Tint", Color)=(1,1,1,1)
         _Diffuse("Diffuse", Color)=(1,1,1,1)
+        
 
     }
     SubShader
     {
         
-
+        
         Pass
         {
+            
             Tags{"LightMode"="ForwardBase"}
             CGPROGRAM
             #pragma vertex vert 
@@ -24,19 +26,19 @@ Shader "Custom/per-pixel lighting"
             #include "Lighting.cginc"
             fixed4 _Color;
             fixed4 _Diffuse;
-
+            
             struct appdata {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
                 float4 texcoord :TEXCOORD;
             };
-
+            
             struct v2f {
                 float4 pos : SV_POSITION;
                 fixed3 color : COLOR0;
                 float3 worldNormal : TEXCOORD0;
             };
-
+            
             v2f vert(appdata v)
             {
                 v2f o;
@@ -44,7 +46,7 @@ Shader "Custom/per-pixel lighting"
                 o.worldNormal = mul(v.normal,(float3x3)unity_WorldToObject);
                 return o;
             }
-
+            
             fixed4 frag(v2f i) : SV_Target
             {
                 fixed3 ambient =UNITY_LIGHTMODEL_AMBIENT.xyz;
